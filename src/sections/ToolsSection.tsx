@@ -69,42 +69,47 @@ function InteractiveToolPill({ tool, index }: { tool: ToolItem; index: number })
         setIsSnaking(true)
         setChaseCount(0)
 
-        // Accelerate completely off-screen
-        const runDistance = Math.max(window.innerWidth, window.innerHeight) * 1.3
+        // Accelerate completely off-screen (capped distance to prevent browser render suspensions)
+        const runDistance = Math.min(window.innerWidth * 0.8, 900)
         const runX = Math.cos(angle) * runDistance
         const runY = Math.sin(angle) * runDistance
 
-        controls.start({
-          x: runX,
-          y: runY,
-          scale: 0.7,
-          transition: { duration: 0.5, ease: 'easeIn' }
-        }).then(() => {
-          // Teleport to the opposite side of the screen
-          const enterX = -runX
-          const enterY = -runY
-          
-          controls.set({
-            x: enterX,
-            y: enterY,
-            scale: 0.7
-          })
+        ;(async () => {
+          try {
+            // 1. Run off-screen fast
+            await controls.start({
+              x: runX,
+              y: runY,
+              scale: 0.7,
+              transition: { duration: 0.4, ease: 'easeIn' }
+            })
 
-          // Snake smoothly back to home position
-          controls.start({
-            x: 0,
-            y: 0,
-            scale: 1,
-            transition: { 
-              duration: 1.3, 
-              type: 'spring', 
-              stiffness: 110, 
-              damping: 14
-            }
-          }).then(() => {
+            // 2. Teleport to the opposite side of the screen
+            controls.set({
+              x: -runX,
+              y: -runY,
+              scale: 0.7
+            })
+
+            // 3. Snake smoothly back to home position
+            await controls.start({
+              x: 0,
+              y: 0,
+              scale: 1,
+              transition: { 
+                duration: 1.1, 
+                type: 'spring', 
+                stiffness: 100, 
+                damping: 12
+              }
+            })
+          } catch (e) {
+            // Fallback reset in case of animation suspension
+            controls.set({ x: 0, y: 0, scale: 1 })
+          } finally {
             setIsSnaking(false)
-          })
-        })
+          }
+        })()
       } else {
         // Run away slightly
         const pushDistance = 90 + nextCount * 45
