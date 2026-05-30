@@ -133,10 +133,17 @@ function InteractiveToolPill({ tool, index }: { tool: ToolItem; index: number })
     if (chaseCount > 0) {
       const timer = setTimeout(() => {
         setChaseCount(0)
-      }, 1500) // Combo time window: hover again within 1.5s to chain a chase!
+        if (!isSnaking) {
+          controls.start({
+            x: 0,
+            y: 0,
+            transition: { type: 'spring', stiffness: 120, damping: 16 }
+          })
+        }
+      }, 2000) // Safety fallback: return home after 2 seconds of no chase updates
       return () => clearTimeout(timer)
     }
-  }, [chaseCount])
+  }, [chaseCount, isSnaking, controls])
 
   return (
     <motion.div
