@@ -3,7 +3,7 @@ import AnimatedText from '../components/AnimatedText'
 import ContactButton from '../components/ContactButton'
 
 const ABOUT_TEXT =
-  "Passionate technology enthusiast and aspiring entrepreneur from India with interests in software development, web development, artificial intelligence, and automation. Currently developing technical skills in programming while working on innovative business and software ideas through Sutradhar. Let's build something incredible together!"
+  "Passionate technology enthusiast and aspiring entrepreneur from India with interests in software development, web development, artificial intelligence, and automation. Currently developing technical skills in programming while working on innovative business and software ideas through Sutraverse. Let's build something incredible together!"
 
 const DECO_IMAGES = [
   {

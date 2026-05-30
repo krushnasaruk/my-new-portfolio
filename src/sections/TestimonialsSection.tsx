@@ -40,7 +40,7 @@ const TESTIMONIALS: Testimonial[] = [
     name: 'Sneha Patil',
     role: 'Fellow Student',
     company: 'DPCO',
-    text: "Working with Krushna on the Sutradhar project has been an amazing experience. His vision for building a full-service tech company while still in college is truly inspiring.",
+    text: "Working with Krushna on the Sutraverse project has been an amazing experience. His vision for building a full-service tech company while still in college is truly inspiring.",
     avatar: 'https://i.pravatar.cc/120?img=32',
     rating: 5,
   },

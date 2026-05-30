@@ -40,7 +40,7 @@ export default function FooterSection() {
               </h3>
               <p className="text-[#D7E2EA]/50 font-light text-sm sm:text-base leading-relaxed max-w-[360px] mb-8">
                 Have an idea that needs technical execution? Whether it&apos;s a website, app,
-                or AI-powered solution — let&apos;s turn it into reality through Sutradhar.
+                or AI-powered solution — let&apos;s turn it into reality through Sutraverse.
               </p>
               <a
                 href="mailto:krushnasaruk1234@gmail.com"
@@ -81,7 +81,7 @@ export default function FooterSection() {
         {/* Bottom bar */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-[#D7E2EA]/30 font-light text-xs sm:text-sm tracking-wide">
-            &copy; {new Date().getFullYear()} Krushna Saruk &middot; Sutradhar. All rights reserved.
+            &copy; {new Date().getFullYear()} Krushna Saruk &middot; Sutraverse. All rights reserved.
           </p>
 
           <motion.button

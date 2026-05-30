@@ -32,7 +32,7 @@ const SERVICES = [
     number: '05',
     name: 'Custom Digital Solutions',
     description:
-      'End-to-end digital product design and development through Sutradhar — from concept and strategy to deployment and scaling.',
+      'End-to-end digital product design and development through Sutraverse — from concept and strategy to deployment and scaling.',
   },
 ]
 
