@@ -60,15 +60,25 @@ export default function FooterSection() {
                     {col.heading}
                   </div>
                   <div className="flex flex-col gap-2 sm:gap-3">
-                    {col.links.map((link, j) => (
-                      <a
-                        key={j}
-                        href="#"
-                        className="text-[#D7E2EA]/70 font-light text-sm hover:text-[#D7E2EA] transition-colors duration-200"
-                      >
-                        {link}
-                      </a>
-                    ))}
+                    {col.links.map((link, j) => {
+                      let href = '#'
+                      if (col.heading === 'Navigation') {
+                        href = `#${link.toLowerCase()}`
+                      } else if (col.heading === 'Connect' && link === 'GitHub') {
+                        href = 'https://github.com/krushnasaruk'
+                      }
+                      return (
+                        <a
+                          key={j}
+                          href={href}
+                          target={col.heading === 'Connect' ? '_blank' : undefined}
+                          rel={col.heading === 'Connect' ? 'noopener noreferrer' : undefined}
+                          className="text-[#D7E2EA]/70 font-light text-sm hover:text-[#D7E2EA] transition-colors duration-200"
+                        >
+                          {link}
+                        </a>
+                      )
+                    })}
                   </div>
                 </div>
               ))}
