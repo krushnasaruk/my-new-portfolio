@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion'
 import FadeIn from '../components/FadeIn'
 import LiveProjectButton from '../components/LiveProjectButton'
 
@@ -58,17 +58,47 @@ function ProjectCard({ project, index, totalCards }: { project: ProjectData; ind
   const targetScale = 1 - (totalCards - 1 - index) * 0.03
   const scale = useTransform(scrollYProgress, [0, 1], [1, targetScale])
 
+  // Mouse tilt variables
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
+
+  const rotateX = useTransform(y, [-0.5, 0.5], [6, -6])
+  const rotateY = useTransform(x, [-0.5, 0.5], [-6, 6])
+
+  const springX = useSpring(rotateX, { damping: 25, stiffness: 150 })
+  const springY = useSpring(rotateY, { damping: 25, stiffness: 150 })
+
+  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect()
+    const width = rect.width
+    const height = rect.height
+    const mouseX = event.clientX - rect.left - width / 2
+    const mouseY = event.clientY - rect.top - height / 2
+    x.set(mouseX / width)
+    y.set(mouseY / height)
+  }
+
+  const handleMouseLeave = () => {
+    x.set(0)
+    y.set(0)
+  }
+
   return (
-    <div ref={containerRef} className="h-[85vh]" style={{ position: 'relative' }}>
+    <div ref={containerRef} className="h-[85vh]" style={{ position: 'relative', perspective: '1200px' }}>
       <motion.div
-        className="sticky top-24 md:top-32 rounded-[40px] sm:rounded-[50px] md:rounded-[60px] border-2 border-[#D7E2EA] bg-[#0C0C0C] p-4 sm:p-6 md:p-8 origin-top"
+        className="sticky rounded-[40px] sm:rounded-[50px] md:rounded-[60px] border-2 border-[#D7E2EA] bg-[#0C0C0C] p-4 sm:p-6 md:p-8 origin-top cursor-default transition-shadow duration-300 hover:shadow-2xl hover:shadow-[#D7E2EA]/5"
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
         style={{
           scale,
           top: `${96 + index * 28}px`,
+          rotateX: springX,
+          rotateY: springY,
+          transformStyle: 'preserve-3d',
         }}
       >
         {/* Top row */}
-        <div className="flex items-start justify-between mb-4 sm:mb-6 md:mb-8 flex-wrap gap-4">
+        <div className="flex items-start justify-between mb-4 sm:mb-6 md:mb-8 flex-wrap gap-4" style={{ transform: 'translateZ(30px)' }}>
           <div className="flex items-center gap-4 sm:gap-6 md:gap-10">
             <span
               className="text-[#D7E2EA] font-black leading-none hero-heading"
@@ -94,37 +124,37 @@ function ProjectCard({ project, index, totalCards }: { project: ProjectData; ind
         </div>
 
         {/* Image grid */}
-        <div className="flex gap-3 sm:gap-4 md:gap-6">
+        <div className="flex gap-3 sm:gap-4 md:gap-6" style={{ transform: 'translateZ(15px)' }}>
           <div className="w-[40%] flex flex-col gap-3 sm:gap-4 md:gap-6">
             <div
-              className="rounded-[40px] sm:rounded-[50px] md:rounded-[60px] overflow-hidden"
+              className="rounded-[40px] sm:rounded-[50px] md:rounded-[60px] overflow-hidden border border-[#D7E2EA]/10"
               style={{ height: 'clamp(130px, 16vw, 230px)' }}
             >
               <img
                 src={project.col1Img1}
                 alt={`${project.name} preview 1`}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
                 loading="lazy"
               />
             </div>
             <div
-              className="rounded-[40px] sm:rounded-[50px] md:rounded-[60px] overflow-hidden"
+              className="rounded-[40px] sm:rounded-[50px] md:rounded-[60px] overflow-hidden border border-[#D7E2EA]/10"
               style={{ height: 'clamp(160px, 22vw, 340px)' }}
             >
               <img
                 src={project.col1Img2}
                 alt={`${project.name} preview 2`}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
                 loading="lazy"
               />
             </div>
           </div>
 
-          <div className="w-[60%] rounded-[40px] sm:rounded-[50px] md:rounded-[60px] overflow-hidden">
+          <div className="w-[60%] rounded-[40px] sm:rounded-[50px] md:rounded-[60px] overflow-hidden border border-[#D7E2EA]/10">
             <img
               src={project.col2Img}
               alt={`${project.name} main`}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
               loading="lazy"
             />
           </div>

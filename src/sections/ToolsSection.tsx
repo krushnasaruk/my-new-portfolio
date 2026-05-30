@@ -88,8 +88,18 @@ export default function ToolsSection() {
               {row.map((tool, i) => (
                 <motion.div
                   key={i}
-                  whileHover={{ scale: 1.06, y: -4 }}
-                  transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                  animate={{
+                    y: [0, -8, 0]
+                  }}
+                  transition={{
+                    y: {
+                      duration: 3 + (i % 4) * 0.7,
+                      repeat: Infinity,
+                      repeatType: "reverse",
+                      ease: "easeInOut"
+                    }
+                  }}
+                  whileHover={{ scale: 1.08 }}
                   className="flex items-center gap-3 sm:gap-4 px-5 py-3 sm:px-7 sm:py-4 md:px-8 md:py-5 rounded-full border border-[#D7E2EA]/15 bg-[#111113] hover:border-[#D7E2EA]/40 transition-colors duration-300 cursor-default"
                 >
                   <img
