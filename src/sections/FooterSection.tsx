@@ -81,7 +81,7 @@ export default function FooterSection() {
         {/* Bottom bar */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-[#D7E2EA]/30 font-light text-xs sm:text-sm tracking-wide">
-            &copy; {new Date().getFullYear()} Krushna Saruk &middot; Sutraverse. All rights reserved.
+            &copy; {new Date().getFullYear()} Krushna Saruk &middot; Sutraverse. All rights reserved. &middot; Made with ❤️
           </p>
 
           <motion.button
