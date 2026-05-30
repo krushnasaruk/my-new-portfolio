@@ -210,7 +210,7 @@ export default function ContactSection() {
                 {
                   icon: Mail,
                   label: 'Email',
-                  value: 'krushna@sutradhar.dev',
+                  value: 'krushnasaruk1234@gmail.com',
                   color: '#B600A8',
                 },
                 {

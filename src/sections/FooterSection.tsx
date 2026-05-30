@@ -43,10 +43,10 @@ export default function FooterSection() {
                 or AI-powered solution — let&apos;s turn it into reality through Sutradhar.
               </p>
               <a
-                href="mailto:krushna@sutradhar.dev"
+                href="mailto:krushnasaruk1234@gmail.com"
                 className="text-[#D7E2EA] font-medium text-lg sm:text-xl hover:text-[#B600A8] transition-colors duration-200 underline underline-offset-4 decoration-[#D7E2EA]/30 hover:decoration-[#B600A8]"
               >
-                krushna@sutradhar.dev
+                krushnasaruk1234@gmail.com
               </a>
             </div>
           </FadeIn>
