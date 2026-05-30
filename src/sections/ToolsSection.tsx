@@ -120,27 +120,30 @@ function InteractiveToolPill({ tool, index }: { tool: ToolItem; index: number })
     }
   }
 
+  const handleMouseLeave = () => {
+    if (isSnaking) return
+    controls.start({
+      x: 0,
+      y: 0,
+      transition: { type: 'spring', stiffness: 150, damping: 15 }
+    })
+  }
+
   useEffect(() => {
     if (chaseCount > 0) {
       const timer = setTimeout(() => {
         setChaseCount(0)
-        if (!isSnaking) {
-          controls.start({
-            x: 0,
-            y: 0,
-            transition: { type: 'spring', stiffness: 100, damping: 18 }
-          })
-        }
-      }, 3500)
+      }, 1500) // Combo time window: hover again within 1.5s to chain a chase!
       return () => clearTimeout(timer)
     }
-  }, [chaseCount, isSnaking, controls])
+  }, [chaseCount])
 
   return (
     <motion.div
       ref={pillRef}
       animate={controls}
       onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       whileHover={{ scale: 1.1 }}
       className="flex items-center gap-3 sm:gap-4 px-5 py-3 sm:px-7 sm:py-4 md:px-8 md:py-5 rounded-full border border-[#D7E2EA]/15 bg-[#111113] hover:border-[#D7E2EA]/40 transition-colors duration-300 cursor-default select-none relative"
       style={{
