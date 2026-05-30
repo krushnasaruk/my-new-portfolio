@@ -11,6 +11,22 @@ interface FadeInProps {
   as?: keyof HTMLElementTagNameMap
 }
 
+// Pre-defined static motion component references to prevent React from unmounting/remounting children
+const motionComponents: Record<string, any> = {
+  div: motion.div,
+  section: motion.section,
+  p: motion.p,
+  span: motion.span,
+  h1: motion.h1,
+  h2: motion.h2,
+  h3: motion.h3,
+  h4: motion.h4,
+  footer: motion.footer,
+  nav: motion.nav,
+  header: motion.header,
+  aside: motion.aside,
+}
+
 export default function FadeIn({
   children,
   delay = 0,
@@ -23,7 +39,7 @@ export default function FadeIn({
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '50px', amount: 0 })
 
-  const MotionComponent = motion.create(as as any)
+  const MotionComponent = motionComponents[as] || motion.div
 
   return (
     <MotionComponent
