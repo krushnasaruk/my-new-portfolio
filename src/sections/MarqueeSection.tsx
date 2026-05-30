@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 
 const ALL_IMAGES = [
   'https://motionsites.ai/assets/hero-space-voyage-preview-eECLH3Yc.gif',
+  '/sutraverse.mov',
   'https://motionsites.ai/assets/hero-codenest-preview-Cgppc2qV.gif',
   'https://motionsites.ai/assets/hero-vex-ventures-preview-BczMFIiw.gif',
   'https://motionsites.ai/assets/hero-stellar-ai-v2-preview-DjvxjG3C.gif',
@@ -12,6 +13,7 @@ const ALL_IMAGES = [
   'https://motionsites.ai/assets/hero-skyelite-preview-DHaZIgUv.gif',
   'https://motionsites.ai/assets/hero-aethera-preview-DknSlcTa.gif',
   'https://motionsites.ai/assets/hero-designpro-preview-D8c5_een.gif',
+  '/sutraverse-2.mov',
   'https://motionsites.ai/assets/hero-stellar-ai-preview-D3HL6bw1.gif',
   'https://motionsites.ai/assets/hero-xportfolio-preview-D4A8maiC.gif',
   'https://motionsites.ai/assets/hero-orbit-web3-preview-BXt4OttD.gif',
@@ -24,8 +26,8 @@ const ALL_IMAGES = [
   'https://motionsites.ai/assets/hero-celestia-preview-0yO3jXO8.gif',
 ]
 
-const ROW1 = ALL_IMAGES.slice(0, 11)
-const ROW2 = ALL_IMAGES.slice(11)
+const ROW1 = ALL_IMAGES.slice(0, 12)
+const ROW2 = ALL_IMAGES.slice(12)
 
 // Triple each row for seamless looping
 const ROW1_TRIPLED = [...ROW1, ...ROW1, ...ROW1]
@@ -48,6 +50,32 @@ export default function MarqueeSection() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  const renderMedia = (src: string, key: string) => {
+    const isVideo = src.endsWith('.mov') || src.endsWith('.mp4')
+    if (isVideo) {
+      return (
+        <video
+          key={key}
+          src={src}
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="w-[420px] h-[270px] rounded-2xl object-cover flex-shrink-0"
+        />
+      )
+    }
+    return (
+      <img
+        key={key}
+        src={src}
+        alt=""
+        loading="lazy"
+        className="w-[420px] h-[270px] rounded-2xl object-cover flex-shrink-0"
+      />
+    )
+  }
+
   return (
     <section
       ref={sectionRef}
@@ -55,28 +83,12 @@ export default function MarqueeSection() {
     >
       {/* Row 1 — moves right */}
       <div className="flex gap-3 mb-3" style={{ transform: `translateX(${offset - 200}px)`, willChange: 'transform' }}>
-        {ROW1_TRIPLED.map((src, i) => (
-          <img
-            key={`r1-${i}`}
-            src={src}
-            alt=""
-            loading="lazy"
-            className="w-[420px] h-[270px] rounded-2xl object-cover flex-shrink-0"
-          />
-        ))}
+        {ROW1_TRIPLED.map((src, i) => renderMedia(src, `r1-${i}`))}
       </div>
 
       {/* Row 2 — moves left */}
       <div className="flex gap-3" style={{ transform: `translateX(${-(offset - 200)}px)`, willChange: 'transform' }}>
-        {ROW2_TRIPLED.map((src, i) => (
-          <img
-            key={`r2-${i}`}
-            src={src}
-            alt=""
-            loading="lazy"
-            className="w-[420px] h-[270px] rounded-2xl object-cover flex-shrink-0"
-          />
-        ))}
+        {ROW2_TRIPLED.map((src, i) => renderMedia(src, `r2-${i}`))}
       </div>
     </section>
   )

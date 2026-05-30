@@ -5,41 +5,8 @@ import ContactButton from '../components/ContactButton'
 
 const NAV_LINKS = ['About', 'Skills', 'Projects', 'Contact']
 
-const containerVariants = {
-  initial: {},
-  animate: {
-    transition: {
-      staggerChildren: 0.04,
-    }
-  }
-}
-
-const letterVariants = {
-  initial: { y: '100%', opacity: 0 },
-  animate: {
-    y: 0,
-    opacity: 1,
-    transition: {
-      duration: 0.8,
-      ease: [0.2, 0.65, 0.3, 0.9] as const,
-    }
-  },
-  hover: {
-    y: -15,
-    scale: 1.05,
-    transition: {
-      type: 'spring' as const,
-      stiffness: 400,
-      damping: 10
-    }
-  }
-}
-
 export default function HeroSection() {
   const [hoveredLink, setHoveredLink] = useState<string | null>(null)
-
-  const nameKrushna = "Krushna".split("")
-  const nameSaruk = "Saruk".split("")
 
   return (
     <section className="relative h-screen flex flex-col font-kanit" style={{ overflowX: 'clip' }}>
@@ -70,25 +37,11 @@ export default function HeroSection() {
       {/* Main hero content — fills remaining space */}
       <div className="flex-1 flex flex-col justify-center px-6 md:px-10 relative z-10">
         {/* Line 1: KRUSHNA */}
-        <motion.div 
-          variants={containerVariants}
-          initial="initial"
-          animate="animate"
-          className="flex overflow-hidden pb-2"
-        >
-          <h1 className="hero-heading font-black uppercase tracking-tight leading-[0.85] w-full text-[17vw] sm:text-[18vw] md:text-[19vw] lg:text-[20vw] flex select-none">
-            {nameKrushna.map((char, i) => (
-              <motion.span
-                key={`k-${i}`}
-                variants={letterVariants}
-                whileHover="hover"
-                className="inline-block origin-bottom cursor-default"
-              >
-                {char}
-              </motion.span>
-            ))}
+        <FadeIn delay={0.15} y={50} className="overflow-hidden pb-2">
+          <h1 className="hero-heading font-black uppercase tracking-tight leading-[0.85] w-full text-[17vw] sm:text-[18vw] md:text-[19vw] lg:text-[20vw] select-none">
+            Krushna
           </h1>
-        </motion.div>
+        </FadeIn>
 
         {/* Middle row: role + decorative line */}
         <FadeIn delay={0.4} y={20} className="flex items-center gap-4 sm:gap-6 md:gap-8 my-3 sm:my-4 md:my-5">
@@ -100,25 +53,11 @@ export default function HeroSection() {
         </FadeIn>
 
         {/* Line 2: SARUK */}
-        <motion.div 
-          variants={containerVariants}
-          initial="initial"
-          animate="animate"
-          className="flex justify-end overflow-hidden pt-2"
-        >
-          <h1 className="hero-heading font-black uppercase tracking-tight leading-[0.85] w-full text-[17vw] sm:text-[18vw] md:text-[19vw] lg:text-[20vw] flex justify-end select-none">
-            {nameSaruk.map((char, i) => (
-              <motion.span
-                key={`s-${i}`}
-                variants={letterVariants}
-                whileHover="hover"
-                className="inline-block origin-bottom cursor-default"
-              >
-                {char}
-              </motion.span>
-            ))}
+        <FadeIn delay={0.3} y={50} className="overflow-hidden pt-2">
+          <h1 className="hero-heading font-black uppercase tracking-tight leading-[0.85] w-full text-[17vw] sm:text-[18vw] md:text-[19vw] lg:text-[20vw] text-right select-none">
+            Saruk
           </h1>
-        </motion.div>
+        </FadeIn>
       </div>
 
       {/* Bottom bar */}

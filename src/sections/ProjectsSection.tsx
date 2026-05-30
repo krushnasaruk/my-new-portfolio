@@ -9,7 +9,8 @@ interface ProjectData {
   category: string
   col1Img1: string
   col1Img2: string
-  col2Img: string
+  col2Img?: string
+  video?: string
   link?: string
 }
 
@@ -20,7 +21,7 @@ const PROJECTS: ProjectData[] = [
     category: 'Startup / Agency',
     col1Img1: '/sutraverse-2.png',
     col1Img2: '/sutraverse-3.png',
-    col2Img: '/sutraverse-1.png',
+    video: '/sutraverse.mov',
     link: 'https://sutraverse.co.in',
   },
   {
@@ -152,12 +153,23 @@ function ProjectCard({ project, index, totalCards }: { project: ProjectData; ind
           </div>
 
           <div className="w-[60%] rounded-[40px] sm:rounded-[50px] md:rounded-[60px] overflow-hidden border border-[#D7E2EA]/10">
-            <img
-              src={project.col2Img}
-              alt={`${project.name} main`}
-              className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-              loading="lazy"
-            />
+            {project.video ? (
+              <video
+                src={project.video}
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+              />
+            ) : (
+              <img
+                src={project.col2Img || ''}
+                alt={`${project.name} main`}
+                className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                loading="lazy"
+              />
+            )}
           </div>
         </div>
       </motion.div>
