@@ -1,13 +1,13 @@
 import { useRef, useEffect, useState } from 'react'
 import FadeIn from '../components/FadeIn'
-import { Star, Quote } from 'lucide-react'
+import { Star, Quote, User } from 'lucide-react'
 
 interface Testimonial {
   name: string
   role: string
   company: string
   text: string
-  avatar: string
+  avatar?: string
   rating: number
 }
 
@@ -17,7 +17,6 @@ const TESTIMONIALS: Testimonial[] = [
     role: 'Faculty Advisor',
     company: 'DPCO AI/ML Club',
     text: "Krushna's leadership as Vice President of our AI/ML club has been outstanding. He brings genuine enthusiasm and organizes workshops that inspire students to explore technology.",
-    avatar: 'https://i.pravatar.cc/120?img=60',
     rating: 5,
   },
   {
@@ -25,7 +24,6 @@ const TESTIMONIALS: Testimonial[] = [
     role: 'Club Member',
     company: 'AI/ML Club, DPCO',
     text: 'The workshops Krushna organized on Python and AI fundamentals were incredibly helpful. He has a talent for making complex topics accessible to beginners.',
-    avatar: 'https://i.pravatar.cc/120?img=25',
     rating: 5,
   },
   {
@@ -33,7 +31,6 @@ const TESTIMONIALS: Testimonial[] = [
     role: 'Small Business Owner',
     company: 'HealthPlus Clinic',
     text: "Krushna built a WhatsApp automation prototype for our clinic that streamlined appointment reminders. His understanding of real business problems is impressive for a student.",
-    avatar: 'https://i.pravatar.cc/120?img=12',
     rating: 5,
   },
   {
@@ -41,7 +38,6 @@ const TESTIMONIALS: Testimonial[] = [
     role: 'Fellow Student',
     company: 'DPCO',
     text: "Working with Krushna on the Sutraverse project has been an amazing experience. His vision for building a full-service tech company while still in college is truly inspiring.",
-    avatar: 'https://i.pravatar.cc/120?img=32',
     rating: 5,
   },
   {
@@ -49,9 +45,16 @@ const TESTIMONIALS: Testimonial[] = [
     role: 'Mentor',
     company: 'Startup India',
     text: "Krushna shows the rare combination of technical curiosity and entrepreneurial drive. His project ideas around AI automation and IoT demonstrate real market understanding.",
-    avatar: 'https://i.pravatar.cc/120?img=53',
     rating: 5,
   },
+]
+
+const AVATAR_COLORS = [
+  { bg: '#362A24', fg: '#F89A74' },
+  { bg: '#242A36', fg: '#749AF8' },
+  { bg: '#243628', fg: '#74F890' },
+  { bg: '#362432', fg: '#F874DA' },
+  { bg: '#363424', fg: '#F8EE74' },
 ]
 
 const DUPED = [...TESTIMONIALS, ...TESTIMONIALS]
@@ -123,12 +126,21 @@ export default function TestimonialsSection() {
               </div>
 
               <div className="flex items-center gap-4 pt-2 border-t border-[#D7E2EA]/10">
-                <img
-                  src={t.avatar}
-                  alt={t.name}
-                  className="w-11 h-11 sm:w-12 sm:h-12 rounded-full object-cover"
-                  loading="lazy"
-                />
+                {t.avatar ? (
+                  <img
+                    src={t.avatar}
+                    alt={t.name}
+                    className="w-11 h-11 sm:w-12 sm:h-12 rounded-full object-cover bg-gray-200"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div 
+                    className="flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 rounded-full overflow-hidden"
+                    style={{ backgroundColor: AVATAR_COLORS[i % AVATAR_COLORS.length].bg, color: AVATAR_COLORS[i % AVATAR_COLORS.length].fg }}
+                  >
+                    <User className="w-8 h-8 mt-2" fill="currentColor" />
+                  </div>
+                )}
                 <div>
                   <div className="text-[#D7E2EA] font-medium text-sm sm:text-base">{t.name}</div>
                   <div className="text-[#D7E2EA]/50 text-xs sm:text-sm">

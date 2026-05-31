@@ -1,8 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 
-const ALL_IMAGES = [
+const ROW1 = [
+  '/cubesat-1.png',
+  '/sutraverse-app-video.mp4',
+  '/sutraverse-2.png',
+  '/cubesat-3.png',
   'https://motionsites.ai/assets/hero-space-voyage-preview-eECLH3Yc.gif',
-  '/sutraverse.mov',
   'https://motionsites.ai/assets/hero-codenest-preview-Cgppc2qV.gif',
   'https://motionsites.ai/assets/hero-vex-ventures-preview-BczMFIiw.gif',
   'https://motionsites.ai/assets/hero-stellar-ai-v2-preview-DjvxjG3C.gif',
@@ -13,6 +16,14 @@ const ALL_IMAGES = [
   'https://motionsites.ai/assets/hero-skyelite-preview-DHaZIgUv.gif',
   'https://motionsites.ai/assets/hero-aethera-preview-DknSlcTa.gif',
   'https://motionsites.ai/assets/hero-designpro-preview-D8c5_een.gif',
+]
+
+const ROW2 = [
+  '/sutraverse.mov',
+  '/sutraverse-app-1.jpeg',
+  '/cubesat-2.png',
+  '/sutraverse-app-2.jpeg',
+  '/sutraverse-3.png',
   '/sutraverse-2.mov',
   'https://motionsites.ai/assets/hero-stellar-ai-preview-D3HL6bw1.gif',
   'https://motionsites.ai/assets/hero-xportfolio-preview-D4A8maiC.gif',
@@ -25,9 +36,6 @@ const ALL_IMAGES = [
   'https://motionsites.ai/assets/hero-luminex-preview-CxOP7ce6.gif',
   'https://motionsites.ai/assets/hero-celestia-preview-0yO3jXO8.gif',
 ]
-
-const ROW1 = ALL_IMAGES.slice(0, 12)
-const ROW2 = ALL_IMAGES.slice(12)
 
 // Triple each row for seamless looping
 const ROW1_TRIPLED = [...ROW1, ...ROW1, ...ROW1]
