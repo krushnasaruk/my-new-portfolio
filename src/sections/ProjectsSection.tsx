@@ -1,5 +1,6 @@
-import { useRef } from 'react'
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion'
+import { useRef, useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
+import { motion, useScroll, useTransform, useMotionValue, useSpring, AnimatePresence } from 'framer-motion'
 import FadeIn from '../components/FadeIn'
 import LiveProjectButton from '../components/LiveProjectButton'
 
@@ -12,6 +13,56 @@ interface ProjectData {
   col2Img?: string
   video?: string
   link?: string
+  info?: {
+    title: string;
+    content: string[];
+  }
+}
+
+function InfoModal({ isOpen, onClose, title, content }: { isOpen: boolean; onClose: () => void; title: string; content: string[] }) {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return null;
+
+  return createPortal(
+    <AnimatePresence>
+      {isOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center px-4 sm:px-6">
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="absolute inset-0 bg-black/80 backdrop-blur-md"
+          />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+            className="relative w-full max-w-3xl max-h-[85vh] overflow-y-auto bg-[#0C0C0C] border-2 border-[#D7E2EA]/20 rounded-3xl p-6 sm:p-10 shadow-2xl z-10 font-kanit"
+          >
+            <button 
+              onClick={onClose}
+              className="absolute top-6 right-6 text-[#D7E2EA]/60 hover:text-[#D7E2EA] transition-colors"
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+            <h3 className="text-2xl sm:text-3xl font-bold text-[#D7E2EA] mb-6 pr-8 uppercase tracking-wide">{title}</h3>
+            <div className="space-y-4 text-[#D7E2EA]/80 leading-relaxed font-light text-sm sm:text-base">
+              {content.map((paragraph, idx) => (
+                <p key={idx}>{paragraph}</p>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>,
+    document.body
+  )
 }
 
 const PROJECTS: ProjectData[] = [
@@ -26,32 +77,37 @@ const PROJECTS: ProjectData[] = [
   },
   {
     number: '02',
-    name: 'WhatsApp AI Automation',
-    category: 'AI Project',
-    col1Img1:
-      'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055654_911201c5-36d9-4bc6-bac7-331adfce159f.png&w=1280&q=85',
-    col1Img2:
-      'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055723_5ceda0b8-d9c2-4665-b2e3-83ba19ba76d1.png&w=1280&q=85',
-    col2Img:
-      'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055753_adc5dcbd-a8e6-49c0-b43a-9b030d835cea.png&w=1280&q=85',
+    name: 'Sutraverse App',
+    category: 'Mobile App',
+    col1Img1: '/sutraverse-app-1.jpeg',
+    col1Img2: '/sutraverse-app-2.jpeg',
+    video: '/sutraverse-app-video.mp4',
     link: '#',
   },
   {
     number: '03',
-    name: 'Smart Assistant Platform',
-    category: 'IoT / AI',
-    col1Img1:
-      'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055759_963cfb0b-4bd1-4b0f-9d0a-09bd6cf95b2f.png&w=1280&q=85',
-    col1Img2:
-      'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_060108_438f781a-9846-4dcc-89ab-c4e6cb830f5b.png&w=1280&q=85',
-    col2Img:
-      'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055818_9d062121-ad7e-46b9-999a-1a6a692ef1ee.png&w=1280&q=85',
-    link: '#',
+    name: 'CubeSat Monitor',
+    category: 'Hardware / IoT',
+    col1Img1: '/cubesat-3.png',
+    col1Img2: '/cubesat-2.png',
+    col2Img: '/cubesat-1.png',
+    info: {
+      title: 'Stepping Out of the Software Sandbox: My First Foray into Hardware World 🛰️',
+      content: [
+        'Up until now, my comfort zone has been strictly within software architecture and AI pipelines. In past deployments—like compiling macOS environments or processing signals for Project Zankar—I usually volunteered for the codebase, viewing physical hardware as an unpredictable variable I preferred to avoid.',
+        'However, for our latest project, a CubeSat-Based Environmental Monitoring & Disaster Management System, thought it was time to stress-test that boundary. We recently presented this multi-nodal IoT system at the Next Gen Project Competition 2K26 (NGPC) hosted by AISSMS IOIT, focusing on the 17 Sustainable Development Goals (SDGs).',
+        'Taking the leap on the physical build was a steep but rewarding learning curve. Working closely with ESP32 modules, and an array of environmental sensors (DHT11, MQ135, MPU6050) taught me lessons that software simply cannot. I learned the realities of physical constraints: managing precise pinout configurations, troubleshooting raw connections, dealing with hardware limitations, and the micromanagement required to keep a complex web of jumper wires from turning into chaos.',
+        'Our system acts as a central data hub, utilizing ESP-NOW for wireless multi-node communication to collect real-time climate and disaster management data from both rural and urban simulated nodes. Witnessing our code successfully execute in a physical, tangible environment—seeing the live data stream directly to our web dashboard—was a completely different kind of satisfaction.',
+        'Successful systemic integration is never a solo effort. A huge thank you to my incredible teammates—Swanand Dindore, Vaishnavi Jare, Prajwal Valekar, and Krushna Saruk—for the late-night debugging sessions and seamless collaboration. This project proved to me that bridging the gap between software logic and hardware reality isn\'t something to avoid; it\'s where the actual engineering happens.',
+        '#IoT #HardwareEngineering #ESP32 #CubeSat #DisasterManagement #NGPC2026 #AISSMS #ComputerScience #Engineering'
+      ]
+    }
   },
 ]
 
 function ProjectCard({ project, index, totalCards }: { project: ProjectData; index: number; totalCards: number }) {
   const containerRef = useRef<HTMLDivElement>(null)
+  const [showInfo, setShowInfo] = useState(false)
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start end', 'end start'],
@@ -121,7 +177,24 @@ function ProjectCard({ project, index, totalCards }: { project: ProjectData; ind
             </div>
           </div>
           <div className="hidden sm:block">
-            <LiveProjectButton link={project.link} />
+            {project.info ? (
+              <>
+                <button
+                  onClick={() => setShowInfo(true)}
+                  className="inline-block rounded-full border-2 border-[#D7E2EA] px-8 py-3 sm:px-10 sm:py-3.5 text-sm sm:text-base text-[#D7E2EA] font-medium uppercase tracking-widest hover:bg-[#D7E2EA]/10 transition-colors duration-200 cursor-pointer"
+                >
+                  View Info
+                </button>
+                <InfoModal 
+                  isOpen={showInfo} 
+                  onClose={() => setShowInfo(false)} 
+                  title={project.info.title} 
+                  content={project.info.content} 
+                />
+              </>
+            ) : (
+              <LiveProjectButton link={project.link} />
+            )}
           </div>
         </div>
 
