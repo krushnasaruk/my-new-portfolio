@@ -2,11 +2,12 @@ import { useState, useRef } from 'react'
 import { motion } from 'framer-motion'
 import FadeIn from '../components/FadeIn'
 import { Send, ArrowUpRight, Github, Linkedin, Instagram, Twitter } from 'lucide-react'
+import emailjs from '@emailjs/browser'
 
 const SOCIALS = [
   { name: 'GitHub', href: 'https://github.com/krushnasaruk', icon: Github },
-  { name: 'LinkedIn', href: 'https://linkedin.com/in/krushnasaruk', icon: Linkedin },
-  { name: 'Instagram', href: '#', icon: Instagram },
+  { name: 'LinkedIn', href: 'https://www.linkedin.com/in/krushna-saruk-762396386?utm_source=share_via&utm_content=profile&utm_medium=member_ios', icon: Linkedin },
+  { name: 'Instagram', href: 'https://www.instagram.com/__.krushna43/', icon: Instagram },
   { name: 'Twitter / X', href: '#', icon: Twitter },
 ]
 
@@ -42,10 +43,32 @@ export default function ContactSection() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    setSubmitted(true)
-    setTimeout(() => setSubmitted(false), 3000)
-    setFormState({ name: '', email: '', subject: '', message: '' })
-    setSelectedServices([])
+
+    const templateParams = {
+      from_name: formState.name,
+      from_email: formState.email,
+      subject: formState.subject,
+      message: formState.message,
+      services: selectedServices.length > 0 ? selectedServices.join(', ') : 'None specified',
+    }
+
+    // Replace 'YOUR_TEMPLATE_ID' and 'YOUR_PUBLIC_KEY' with your actual EmailJS details
+    emailjs
+      .send('service_tbeuuwa', 'template_2whd73d', templateParams, {
+        publicKey: 'qHMb71MZdqJZkQ-Y0',
+      })
+      .then(
+        () => {
+          setSubmitted(true)
+          setTimeout(() => setSubmitted(false), 3000)
+          setFormState({ name: '', email: '', subject: '', message: '' })
+          setSelectedServices([])
+        },
+        (error) => {
+          console.error('FAILED...', error)
+          alert(`Failed to send message: ${error.text || error.message || 'Unknown error'}`)
+        }
+      )
   }
 
   return (

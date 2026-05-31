@@ -64,8 +64,10 @@ export default function FooterSection() {
                       let href = '#'
                       if (col.heading === 'Navigation') {
                         href = `#${link.toLowerCase()}`
-                      } else if (col.heading === 'Connect' && link === 'GitHub') {
-                        href = 'https://github.com/krushnasaruk'
+                      } else if (col.heading === 'Connect') {
+                        if (link === 'GitHub') href = 'https://github.com/krushnasaruk'
+                        else if (link === 'LinkedIn') href = 'https://www.linkedin.com/in/krushna-saruk-762396386?utm_source=share_via&utm_content=profile&utm_medium=member_ios'
+                        else if (link === 'Instagram') href = 'https://www.instagram.com/__.krushna43/'
                       }
                       return (
                         <a
